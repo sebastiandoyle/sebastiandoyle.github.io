@@ -141,6 +141,7 @@
     margin-bottom: 20px;
   }
   .main h2:first-child { margin-top: 0; }
+  .main section + section { margin-top: 64px; }
 
   /* ── About ── */
   .about p {
@@ -157,19 +158,53 @@
     grid-template-columns: 1fr 1fr;
     gap: 24px;
     max-width: 860px;
+    counter-reset: project;
   }
   .project-card {
-    border: 1px solid #e2e8f0;
+    border: 1px solid transparent;
     border-radius: 10px;
     overflow: hidden;
-    transition: box-shadow 0.2s, transform 0.15s;
+    position: relative;
+    transition: all 0.3s ease;
+    counter-increment: project;
+  }
+  .project-card::after {
+    content: counter(project, decimal-leading-zero);
+    position: absolute;
+    top: -8px;
+    right: 16px;
+    font-size: 72px;
+    font-weight: 800;
+    color: #f1f5f9;
+    line-height: 1;
+    z-index: 0;
+    pointer-events: none;
+    transition: color 0.3s ease;
+  }
+  .project-card:hover::after {
+    color: #e8f0fe;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 12px;
+    width: 3px;
+    background: #2563eb;
+    border-radius: 2px;
+    transform: scaleY(0);
+    transition: transform 0.25s ease;
+  }
+  .project-card:hover::before {
+    transform: scaleY(1);
   }
   .project-card:hover {
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
+    border-color: #f1f5f9;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.04);
   }
   .card-accent {
-    height: 4px;
+    display: none;
   }
   .card-accent-1 { background: linear-gradient(90deg, #2563eb, #60a5fa); }
   .card-accent-2 { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
@@ -178,6 +213,9 @@
   .card-accent-5 { background: linear-gradient(90deg, #dc2626, #f87171); }
   .card-body {
     padding: 20px 22px 18px;
+    padding-left: 24px;
+    position: relative;
+    z-index: 1;
   }
   .card-title {
     font-size: 17px;
@@ -194,8 +232,9 @@
   .tag {
     font-size: 11px;
     font-weight: 600;
-    color: #2563eb;
-    background: #eff6ff;
+    color: #475569;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     padding: 3px 10px;
     border-radius: 20px;
   }
@@ -344,6 +383,7 @@
     }
   }
 </style>
+<script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
 </head>
 <body>
 
@@ -361,11 +401,11 @@
     <h1>Sebastian Doyle</h1>
     <div class="tagline">Law Graduate &amp; Software Engineer<br>Legal Tech &bull; Automation &bull; ML</div>
 
-    <nav>
-      <a href="#about" onclick="closeSidebar()">About</a>
-      <a href="#projects" onclick="closeSidebar()">Projects</a>
-      <a href="#contact" onclick="closeSidebar()">Contact</a>
-    </nav>
+    <h3>Contact</h3>
+    <div class="contact-item">Brisbane, Australia</div>
+    <div class="contact-item"><a href="mailto:sebastian.doyle@outlook.com">sebastian.doyle@outlook.com</a></div>
+    <div class="contact-item"><a href="tel:+61421244135">+61 421 244 135</a></div>
+    <div class="contact-item"><a href="https://github.com/sebastiandoyle">github.com/sebastiandoyle</a></div>
 
     <h3>Languages</h3>
     <ul>
@@ -373,7 +413,7 @@
       <li>Swift / SwiftUI</li>
       <li>JavaScript</li>
       <li>SQL</li>
-      <li>R</li>
+      <li>R / Stata</li>
       <li>Bash</li>
     </ul>
 
@@ -381,9 +421,10 @@
     <ul>
       <li>scikit-learn / NLP</li>
       <li>App Store Connect API</li>
-      <li>Fastlane</li>
-      <li>CI/CD</li>
+      <li>Fastlane / CI/CD</li>
       <li>Git / GitHub Actions</li>
+      <li>Power Automate</li>
+      <li>SharePoint</li>
     </ul>
 
     <h3>Education</h3>
@@ -396,12 +437,16 @@
       <div class="edu-school">Queensland University of Technology</div>
     </div>
 
-    <a href="resume-2-technical.pdf" class="btn-resume" download>Download Resume</a>
+    <div class="edu-block">
+      <div class="edu-degree">Ian Fletcher International</div>
+      <div class="edu-school">Insolvency Moot</div>
+    </div>
+    <div class="edu-block">
+      <div class="edu-degree">Google Project Management</div>
+      <div class="edu-school">Certificate</div>
+    </div>
 
-    <h3>Links</h3>
-    <div class="contact-item"><a href="https://github.com/sebastiandoyle">GitHub</a></div>
-    <div class="contact-item"><a href="https://twitter.com/itssebdoyle">Twitter</a></div>
-    <div class="contact-item"><a href="mailto:sebastian.doyle@outlook.com">Email</a></div>
+    <a href="resume-2-technical.pdf" class="btn-resume" download>Download Resume</a>
   </aside>
 
   <!-- Main content -->
@@ -409,9 +454,7 @@
 
     <section id="about" class="about">
       <h2>About</h2>
-      <p>Law and economics graduate who builds software. I've shipped 16+ iOS apps with end-to-end automation — from code generation and testing through screenshot creation and App Store submission — all orchestrated through custom CI/CD pipelines.</p>
-      <p>Previously, I developed an ML document classifier at Peabody Energy that cut legal review time by 60%, automated compliance reporting that saved 15+ hours per week, and consulted on workforce transformation at Deloitte for Defence clients.</p>
-      <p>I build tools at the intersection of law, automation, and AI — finding ways to make repetitive processes disappear so humans can focus on the work that actually matters.</p>
+      <p>Product-minded engineer who builds <span id="rn-auto">automation-first</span> systems that scale, including API integrations, scheduling pipelines, and analytics dashboards. Scaled a subscription D2C platform to <span id="rn-200k">200k+ followers</span> with zero paid acquisition, achieving a six-figure run rate, and now focused on bringing that execution to <span id="rn-legal">legal AI</span>.</p>
     </section>
 
     <section id="projects">
@@ -428,7 +471,7 @@
               <span class="tag">AI</span>
               <span class="tag">WebSocket</span>
             </div>
-            <div class="card-desc">Inspired by the principled negotiation role-play in QUT's LLB304 Commercial Remedies. Turns the structured framework — interests, BATNAs, option generation — into an AI-powered simulator where you practice against an opponent that adapts to your strategy.</div>
+            <div class="card-desc">Where the legal background meets the engineering. Takes the principled negotiation framework from my LLB — interests, BATNAs, option generation — and puts it in front of an AI opponent that adapts in real time. Built to prove legal training doesn't have to be static.</div>
             <div class="card-links">
               <a href="https://negotiationroleplay.vercel.app" class="btn-demo" target="_blank" rel="noopener">Live Demo</a>
               <a href="https://github.com/sebastiandoyle/negotiationroleplay" class="btn-code" target="_blank" rel="noopener">View Code</a>
@@ -446,7 +489,7 @@
               <span class="tag">TypeScript</span>
               <span class="tag">React 19</span>
             </div>
-            <div class="card-desc">Web companion for the Imposter party game. Real-time game logic, word generation, and role assignment for groups of 3-10 players.</div>
+            <div class="card-desc">A party game that went from idea to shipped product in a weekend. Real-time role assignment, word generation, and game state for 3–10 players — built with the same ship-fast infrastructure I use for everything.</div>
             <div class="card-links">
               <a href="https://github.com/sebastiandoyle/imposter-web" class="btn-code" target="_blank" rel="noopener">View Code</a>
             </div>
@@ -463,7 +506,7 @@
               <span class="tag">NLP</span>
               <span class="tag">scikit-learn</span>
             </div>
-            <div class="card-desc">NLP sentiment analysis across 60+ years of presidential debates. Tracks emotional tone, aggression, and rhetorical patterns over time.</div>
+            <div class="card-desc">The project that made me fall for NLP. Sixty years of presidential debates, broken down by emotional tone, aggression, and rhetorical pattern — answering the question: can you actually measure how much meaner politics has gotten?</div>
             <div class="card-links">
               <a href="https://github.com/sebastiandoyle/debate-analysis" class="btn-code" target="_blank" rel="noopener">View Code</a>
             </div>
@@ -480,7 +523,7 @@
               <span class="tag">OpenAI</span>
               <span class="tag">ElevenLabs</span>
             </div>
-            <div class="card-desc">Serverless API that generates personalized guided meditations. OpenAI writes the script, ElevenLabs speaks it, delivered as streaming audio.</div>
+            <div class="card-desc">A serverless pipeline that writes, voices, and streams a personalised meditation in a single request. OpenAI scripts it, ElevenLabs speaks it, Cloudflare Workers stitches it together — zero servers, infinite scale.</div>
             <div class="card-links">
               <a href="https://github.com/sebastiandoyle/meditation-api" class="btn-code" target="_blank" rel="noopener">View Code</a>
             </div>
@@ -498,7 +541,7 @@
               <span class="tag">PIL</span>
               <span class="tag">OpenAI TTS</span>
             </div>
-            <div class="card-desc">Automated faceless video generator for vertical content. Feed it a script, get a 9:16 video with text animations, voiceover, and sound design.</div>
+            <div class="card-desc">The automation behind the 200k. Feed it a script, get a publish-ready 9:16 video — text animations, voiceover, sound design — no editor, no manual steps. This is the system that turned content creation from a daily grind into a cron job.</div>
             <div class="card-links">
               <a href="https://github.com/sebastiandoyle/video-generation-pipeline" class="btn-code" target="_blank" rel="noopener">View Code</a>
             </div>
@@ -508,18 +551,10 @@
       </div>
     </section>
 
-    <section id="contact" class="contact-section">
-      <h2>Contact</h2>
-      <div class="contact-links">
-        <a href="mailto:sebastian.doyle@outlook.com">sebastian.doyle@outlook.com</a>
-        <a href="https://github.com/sebastiandoyle" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://twitter.com/itssebdoyle" target="_blank" rel="noopener">Twitter</a>
-      </div>
-    </section>
-
     <footer>Built with HTML, CSS, and zero frameworks.</footer>
 
   </main>
+
 
   <script>
     function toggleSidebar() {
@@ -532,6 +567,27 @@
       document.querySelector('.sidebar-overlay').classList.remove('open');
       document.querySelector('.burger').classList.remove('open');
     }
+  </script>
+  <script>
+  (function() {
+    var annotations = [
+      { el: document.querySelector('#rn-auto'), type: 'underline', color: '#94a3b8', strokeWidth: 1 },
+      { el: document.querySelector('#rn-200k'), type: 'circle', color: '#94a3b8', strokeWidth: 1, padding: 5 },
+      { el: document.querySelector('#rn-legal'), type: 'underline', color: '#94a3b8', strokeWidth: 1 }
+    ];
+    var items = annotations.map(function(a) {
+      return RoughNotation.annotate(a.el, { type: a.type, color: a.color, strokeWidth: a.strokeWidth, padding: a.padding || 2, animationDuration: 1200 });
+    });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if(entry.isIntersecting) {
+          items.forEach(function(item, i) { setTimeout(function() { item.show(); }, i * 700); });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(document.querySelector('.about'));
+  })();
   </script>
 </body>
 </html>
