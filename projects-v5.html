@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sebastian Doyle | Software Engineer & Law Graduate</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a1a; line-height: 1.6; display: flex; min-height: 100vh; }
+
+  .sidebar { width: 280px; background: #1e293b; color: #e2e8f0; padding: 48px 28px 32px; flex-shrink: 0; position: fixed; top: 0; left: 0; bottom: 0; overflow-y: auto; z-index: 10; }
+  .sidebar h1 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 6px; line-height: 1.2; }
+  .sidebar .tagline { font-size: 13px; color: #94a3b8; margin-bottom: 32px; line-height: 1.5; }
+  .sidebar h3 { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: #60a5fa; margin-top: 24px; margin-bottom: 10px; border-bottom: 1px solid #334155; padding-bottom: 5px; }
+  .sidebar h3:first-of-type { margin-top: 0; }
+  .sidebar ul { list-style: none; padding: 0; }
+  .sidebar li { font-size: 13px; color: #cbd5e1; margin-bottom: 4px; padding-left: 14px; position: relative; line-height: 1.5; }
+  .sidebar li::before { content: ">"; position: absolute; left: 0; color: #60a5fa; font-size: 11px; top: 1px; }
+  .edu-block { margin-bottom: 8px; }
+  .edu-degree { font-weight: 600; color: #e2e8f0; font-size: 13px; }
+  .edu-school { font-size: 12px; color: #94a3b8; }
+  .edu-minor { font-size: 11px; color: #64748b; margin-top: 6px; }
+  .btn-resume { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #2563eb; color: #fff; text-decoration: none; border-radius: 6px; font-size: 13px; font-weight: 600; transition: background 0.2s; }
+  .btn-resume:hover { background: #1d4ed8; }
+  .contact-item { font-size: 13px; color: #94a3b8; margin-bottom: 4px; }
+  .contact-item a { color: #93c5fd; text-decoration: none; }
+  .contact-item a:hover { color: #60a5fa; }
+
+  .main { flex: 1; margin-left: 280px; padding: 56px 48px 48px; background: #fff; max-width: 100%; }
+  .main h2 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #1e293b; border-bottom: 2px solid #2563eb; padding-bottom: 6px; margin-top: 48px; margin-bottom: 20px; }
+  .main h2:first-child { margin-top: 0; }
+  .main section + section { margin-top: 64px; }
+  .about p { font-size: 15px; color: #334155; margin-bottom: 12px; max-width: 720px; line-height: 1.7; }
+  .tag { font-size: 11px; font-weight: 600; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; padding: 3px 10px; border-radius: 20px; }
+
+  /* V5: Bold Statement + Evidence */
+  .statement-section { max-width: 780px; }
+  .big-statement {
+    font-size: 40px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .big-statement span {
+    color: #2563eb;
+  }
+  .statement-sub {
+    font-size: 16px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 36px;
+    max-width: 560px;
+  }
+
+  .evidence-wall {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-bottom: 32px;
+    max-width: 560px;
+  }
+  .evidence-wall img {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+  }
+  .evidence-wall img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+
+  .numbers-row {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 28px;
+  }
+  .number-item { }
+  .number-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.1;
+  }
+  .number-label {
+    font-size: 12px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .story-text {
+    font-size: 15px;
+    color: #334155;
+    line-height: 1.8;
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+  .story-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 20px 0 12px; }
+  .story-link {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: #2563eb;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.2s;
+    margin-top: 4px;
+  }
+  .story-link:hover { background: #1d4ed8; }
+
+  /* Before/After contrast table */
+  .contrast-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-bottom: 36px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  .contrast-col {
+    padding: 32px 28px;
+  }
+  .contrast-before {
+    background: #fafafa;
+    border-right: 1px solid #e2e8f0;
+  }
+  .contrast-after {
+    background: #fff;
+  }
+  .contrast-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .label-before { color: #94a3b8; background: #f1f5f9; }
+  .label-after { color: #2563eb; background: #eff6ff; }
+  .contrast-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .contrast-icon {
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 1px;
+  }
+  .contrast-before .contrast-text { color: #94a3b8; }
+  .contrast-before .contrast-text s { text-decoration: line-through; }
+  .contrast-after .contrast-text { color: #334155; font-weight: 500; }
+
+  /* Card carousel */
+  .carousel {
+    max-width: 780px;
+    position: relative;
+  }
+  .carousel-card {
+    display: none;
+    animation: cardFadeIn 0.3s ease;
+  }
+  .carousel-card.active { display: block; }
+  @keyframes cardFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    gap: 12px;
+  }
+  .carousel-tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .carousel-tab {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .carousel-tab:hover { color: #334155; border-color: #cbd5e1; }
+  .carousel-tab.active {
+    color: #fff;
+    background: #2563eb;
+    border-color: #2563eb;
+  }
+
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #94a3b8; }
+
+  .mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; background: #1e293b; padding: 14px 20px; z-index: 20; align-items: center; justify-content: space-between; }
+  .mobile-header h1 { font-size: 18px; color: #fff; font-weight: 700; }
+  .burger { background: none; border: none; cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 4px; }
+  .burger span { display: block; width: 22px; height: 2px; background: #e2e8f0; border-radius: 1px; transition: transform 0.2s, opacity 0.2s; }
+  .burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 9; }
+
+  @media (max-width: 768px) {
+    .mobile-header { display: flex; }
+    .sidebar { position: fixed; transform: translateX(-100%); transition: transform 0.3s ease; padding-top: 64px; width: 280px; z-index: 10; }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-overlay.open { display: block; }
+    .main { margin-left: 0; padding: 80px 20px 32px; }
+    .big-statement { font-size: 28px; letter-spacing: -0.5px; }
+    .evidence-wall { grid-template-columns: repeat(4, 1fr); }
+    .numbers-row { gap: 24px; flex-wrap: wrap; }
+    .number-value { font-size: 28px; }
+    .contrast-grid { grid-template-columns: 1fr; }
+    .contrast-before { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  }
+</style>
+<script src="https://unpkg.com/rough-notation/lib/rough-notation.iife.js"></script>
+</head>
+<body>
+  <div class="mobile-header">
+    <h1>Sebastian Doyle</h1>
+    <button class="burger" onclick="toggleSidebar()" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+  <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <aside class="sidebar">
+    <h1>Sebastian Doyle</h1>
+    <div class="tagline">Law Graduate &amp; Software Engineer<br>Legal Tech &bull; Automation &bull; ML</div>
+    <h3>Contact</h3>
+    <div class="contact-item">Brisbane, Australia</div>
+    <div class="contact-item"><a href="mailto:sebastian.doyle@outlook.com">sebastian.doyle@outlook.com</a></div>
+    <div class="contact-item"><a href="tel:+61421244135">+61 421 244 135</a></div>
+    <div class="contact-item"><a href="https://github.com/sebastiandoyle">github.com/sebastiandoyle</a></div>
+    <div class="contact-item">British Citizen · Australian Passport</div>
+    <div class="contact-item">Open to relocation</div>
+    <h3>Languages</h3>
+    <ul><li>Python</li><li>Swift / SwiftUI</li><li>JavaScript</li><li>SQL</li><li>R / Stata</li><li>Bash</li></ul>
+    <h3>Frameworks &amp; Tools</h3>
+    <ul><li>scikit-learn / NLP</li><li>App Store Connect API</li><li>Fastlane / CI/CD</li><li>Git / GitHub Actions</li><li>Power Automate</li><li>SharePoint</li></ul>
+    <h3>Education</h3>
+    <div class="edu-block"><div class="edu-degree">LLB (Hons)</div><div class="edu-school">Queensland University of Technology</div></div>
+    <div class="edu-block"><div class="edu-degree">BBus (Economics)</div><div class="edu-school">Queensland University of Technology</div></div>
+    <div class="edu-minor">Ian Fletcher International Insolvency Moot</div>
+    <div class="edu-minor">Google Project Management Certificate</div>
+    <a href="Sebastian_Doyle_Resume_2026.pdf" class="btn-resume" download>Download Resume</a>
+  </aside>
+
+  <main class="main">
+
+    <section id="about" class="about">
+      <h2>About</h2>
+      <p>AI is moving faster than most ventures can keep up with. I build <span id="rn-auto">automation-first</span> systems that close that gap. Designed an autonomous pipeline that shipped 11 iOS apps from prompt to App Store, zero manual builds. Scaled a subscription platform to <span id="rn-200k">200k+ followers</span> with zero paid acquisition, hitting a six-figure run rate. Economics and law background. I think in <span id="rn-legal">systems</span> and ship at the speed AI allows.</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="carousel">
+        <div class="carousel-nav">
+          <div class="carousel-tabs">
+            <button class="carousel-tab active" onclick="showCard(0)">Foundry</button>
+            <button class="carousel-tab" onclick="showCard(1)">Debate Analysis</button>
+            <button class="carousel-tab" onclick="showCard(2)">Negotiation AI</button>
+          </div>
+        </div>
+
+        <!-- Card 1: Foundry -->
+        <div class="carousel-card active" data-card="0">
+          <div class="statement-section">
+            <div class="big-statement">One prompt.<br><span>Eleven apps</span> on the App Store.</div>
+            <div class="statement-sub">I built an autonomous pipeline that takes a single sentence and ships a complete iOS app: code, icon, screenshots, metadata, pricing, review submission. No human in the loop.</div>
+
+            <div class="evidence-wall">
+              <img src="icons/imposter.png" alt="Imposter">
+              <img src="icons/cleansnap.png" alt="CleanSnap">
+              <img src="icons/zendot.png" alt="ZenDot">
+              <img src="icons/flipcoin.png" alt="FlipCoin">
+              <img src="icons/diceroll.png" alt="DiceRoll">
+              <img src="icons/focusone.png" alt="FocusOne">
+              <img src="icons/winddown.png" alt="WindDown">
+              <img src="icons/anchor.png" alt="Anchor">
+              <img src="icons/stillpoint.png" alt="Stillpoint">
+              <img src="icons/steadily.png" alt="Steadily">
+              <img src="icons/serenify.png" alt="Serenify">
+              <img src="icons/hydromind.png" alt="HydroMind">
+              <img src="icons/dusk.png" alt="Dusk">
+              <img src="icons/dawncalm.png" alt="DawnCalm">
+            </div>
+
+            <div class="numbers-row">
+              <div class="number-item"><div class="number-value">67,800</div><div class="number-label">Impressions</div></div>
+              <div class="number-item"><div class="number-value">1,792</div><div class="number-label">Downloads</div></div>
+              <div class="number-item"><div class="number-value">11</div><div class="number-label">Apps Live</div></div>
+            </div>
+
+            <div class="contrast-grid">
+              <div class="contrast-col contrast-before">
+                <div class="contrast-label label-before">How most teams ship an app</div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Write code in Xcode</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Design app icon in Figma</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Take screenshots manually</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Style marketing images in Canva</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Fill metadata fields by hand</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Configure pricing in 175 territories</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Upload build through Xcode</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Click through submission forms</s></span></div>
+              </div>
+              <div class="contrast-col contrast-after">
+                <div class="contrast-label label-after">How my pipeline ships an app</div>
+                <div class="contrast-item"><span class="contrast-icon">1</span><span class="contrast-text">Write a one-sentence prompt</span></div>
+                <div class="contrast-item"><span class="contrast-icon">2</span><span class="contrast-text">Go to sleep</span></div>
+                <div class="contrast-item"><span class="contrast-icon">3</span><span class="contrast-text">Wake up to "Waiting for Review"</span></div>
+              </div>
+            </div>
+
+            <p class="story-text">The orchestrator is a Bash loop that spawns fresh AI sessions. Each one reads the current state from git, picks up the next task from a 22-step pipeline, executes it, commits, and exits. The next session starts clean with zero context pollution. It handles everything: Swift code generation via xcodegen, xcodebuild compilation, icon and screenshot creation with PIL, Fastlane uploads, App Store Connect API calls for metadata and pricing across 175 territories, and browser automation for final submission.</p>
+
+            <p class="story-text">I designed the system. AI does the building.</p>
+
+            <div class="story-tags">
+              <span class="tag">Swift</span><span class="tag">Claude Code</span><span class="tag">Fastlane</span><span class="tag">xcodegen</span><span class="tag">ASC API</span><span class="tag">Python</span><span class="tag">Bash</span>
+            </div>
+            <a href="https://github.com/sebastiandoyle/foundry" class="story-link" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+
+        <!-- Card 2: Debate Analysis -->
+        <div class="carousel-card" data-card="1">
+          <div class="statement-section">
+            <div class="big-statement">60 years of debates.<br><span>Every word</span> quantified.</div>
+            <div class="statement-sub">NLP analysis of every US presidential debate since Kennedy-Nixon. Measuring what changed in how candidates speak, and when aggression started winning.</div>
+
+            <div class="contrast-grid">
+              <div class="contrast-col contrast-before">
+                <div class="contrast-label label-before">What pundits do</div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Watch the debate live</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Form gut reactions</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Argue about "who won"</s></span></div>
+                <div class="contrast-item"><span class="contrast-icon">~</span><span class="contrast-text"><s>Forget it by next week</s></span></div>
+              </div>
+              <div class="contrast-col contrast-after">
+                <div class="contrast-label label-after">What this pipeline does</div>
+                <div class="contrast-item"><span class="contrast-icon">1</span><span class="contrast-text">Parse every transcript into structured data</span></div>
+                <div class="contrast-item"><span class="contrast-icon">2</span><span class="contrast-text">Score tone, aggression, and rhetoric per turn</span></div>
+                <div class="contrast-item"><span class="contrast-icon">3</span><span class="contrast-text">Plot the 60-year shift in how candidates fight</span></div>
+              </div>
+            </div>
+
+            <div class="numbers-row">
+              <div class="number-item"><div class="number-value">60+</div><div class="number-label">Years of Data</div></div>
+              <div class="number-item"><div class="number-value">30</div><div class="number-label">Debates Analysed</div></div>
+              <div class="number-item"><div class="number-value">50k+</div><div class="number-label">Turns Scored</div></div>
+            </div>
+
+            <p class="story-text">The pipeline scrapes and parses full debate transcripts, tokenises each candidate's turns, and runs sentiment and aggression scoring using scikit-learn classifiers. The output is a dataset that tracks rhetorical style across decades, showing exactly when American political debate shifted from policy substance to personal attack. Built during my economics degree as a way to apply ML to something I actually cared about.</p>
+
+            <p class="story-text">The data tells the story. The models just make it legible.</p>
+
+            <div class="story-tags">
+              <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">NLP</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">Sentiment Analysis</span>
+            </div>
+            <a href="https://github.com/sebastiandoyle/debate-analysis" class="story-link" target="_blank" rel="noopener">View on GitHub</a>
+          </div>
+        </div>
+
+        <!-- Card 3: Negotiation Roleplay -->
+        <div class="carousel-card" data-card="2">
+          <div class="statement-section">
+            <div class="big-statement">It feels like a conversation.<br><span>Underneath, it's function calls.</span></div>
+            <div class="statement-sub">A negotiation trainer where the user just talks. Behind the smooth interaction, an LLM is selecting and executing functions in real time: scoring technique, adjusting difficulty, switching strategy.</div>
+
+            <div class="contrast-grid">
+              <div class="contrast-col contrast-before">
+                <div class="contrast-label label-before">What the user sees</div>
+                <div class="contrast-item"><span class="contrast-icon">1</span><span class="contrast-text">A natural back-and-forth conversation</span></div>
+                <div class="contrast-item"><span class="contrast-icon">2</span><span class="contrast-text">An opponent that feels human</span></div>
+                <div class="contrast-item"><span class="contrast-icon">3</span><span class="contrast-text">A technique scorecard after each round</span></div>
+              </div>
+              <div class="contrast-col contrast-after">
+                <div class="contrast-label label-after">What's actually happening</div>
+                <div class="contrast-item"><span class="contrast-icon">&gt;</span><span class="contrast-text">LLM classifies user input into negotiation moves</span></div>
+                <div class="contrast-item"><span class="contrast-icon">&gt;</span><span class="contrast-text">Function calls trigger: score_technique(), adjust_difficulty(), select_counter_tactic()</span></div>
+                <div class="contrast-item"><span class="contrast-icon">&gt;</span><span class="contrast-text">State machine tracks anchors, concessions, and BATNAs across turns</span></div>
+                <div class="contrast-item"><span class="contrast-icon">&gt;</span><span class="contrast-text">Response generated with context from all prior function outputs</span></div>
+              </div>
+            </div>
+
+            <div class="numbers-row">
+              <div class="number-item"><div class="number-value">Live</div><div class="number-label">In Production</div></div>
+              <div class="number-item"><div class="number-value">6</div><div class="number-label">Scenarios</div></div>
+              <div class="number-item"><div class="number-value">12+</div><div class="number-label">Functions Called by AI</div></div>
+            </div>
+
+            <p class="story-text">The beauty is in the design of the functions themselves. Each one encodes a principle from negotiation theory: BATNA awareness, interest mapping, creative option generation, objective criteria. The LLM decides which to call based on what the user just said. It's not a chatbot with a system prompt. It's a program where the control flow is determined by a language model, and each branch runs real logic.</p>
+
+            <p class="story-text">Built from three years of studying negotiation in law school. The AI handles the conversation. The functions handle the scoring.</p>
+
+            <div class="story-tags">
+              <span class="tag">JavaScript</span><span class="tag">LLM Function Calling</span><span class="tag">WebSocket</span><span class="tag">Vercel</span><span class="tag">State Machines</span><span class="tag">Prompt Engineering</span>
+            </div>
+            <a href="https://negotiationroleplay.vercel.app" class="story-link" target="_blank" rel="noopener">Try It Live</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer>Built with HTML, CSS, and zero frameworks.</footer>
+  </main>
+
+  <script>
+    var currentCard = 0;
+    var totalCards = 3;
+
+    function showCard(index) {
+      currentCard = index;
+      document.querySelectorAll('.carousel-card').forEach(function(c) { c.classList.remove('active'); });
+      document.querySelectorAll('.carousel-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelector('[data-card="' + index + '"]').classList.add('active');
+      document.querySelectorAll('.carousel-tab')[index].classList.add('active');
+    }
+
+
+    function toggleSidebar() {
+      document.querySelector('.sidebar').classList.toggle('open');
+      document.querySelector('.sidebar-overlay').classList.toggle('open');
+      document.querySelector('.burger').classList.toggle('open');
+    }
+  </script>
+  <script>
+  (function() {
+    var annotations = [
+      { el: document.querySelector('#rn-auto'), type: 'underline', color: '#94a3b8', strokeWidth: 1 },
+      { el: document.querySelector('#rn-200k'), type: 'circle', color: '#94a3b8', strokeWidth: 1, padding: 5 },
+      { el: document.querySelector('#rn-legal'), type: 'underline', color: '#94a3b8', strokeWidth: 1 }
+    ];
+    var items = annotations.map(function(a) {
+      return RoughNotation.annotate(a.el, { type: a.type, color: a.color, strokeWidth: a.strokeWidth, padding: a.padding || 2, animationDuration: 1200 });
+    });
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if(entry.isIntersecting) {
+          items.forEach(function(item, i) { setTimeout(function() { item.show(); }, i * 700); });
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    observer.observe(document.querySelector('.about'));
+  })();
+  </script>
+</body>
+</html>
